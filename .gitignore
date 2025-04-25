@@ -3,6 +3,9 @@
 .vscode/*
 !.vscode/extensions.json
 .idea
+*.iws
+*.iml
+*.ipr
 
 # Environment file
 .env
