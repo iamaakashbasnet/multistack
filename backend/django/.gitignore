@@ -1,0 +1,7 @@
+# Python pkgs
+.venv
+
+# Python cache and db files
+__pycache__
+*.pyc
+db.sqlite3
