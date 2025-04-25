@@ -1,0 +1,11 @@
+# IDE configs
+.vscode
+.vscode/*
+!.vscode/extensions.json
+.idea
+
+# Environment file
+.env
+
+# Misc
+.DS_Store
