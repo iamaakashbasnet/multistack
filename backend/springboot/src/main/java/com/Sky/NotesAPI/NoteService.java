@@ -32,4 +32,24 @@ public class NoteService {
         Note savedNote = noteRepository.saveAndFlush(note);
         return new NoteResponseDTO(savedNote);
     }
+
+    public NoteResponseDTO updateNote(Long userId, Long noteId, NoteRequestDTO noteRequestDTO) {
+        Note note = noteRepository.findById(noteId).orElse(null);
+        if(note == null) {
+            return null;
+        }
+        note.setTitle(noteRequestDTO.getTitle());
+        note.setContent(noteRequestDTO.getContent());
+        Note savedNote = noteRepository.saveAndFlush(note);
+        return new NoteResponseDTO(savedNote);
+    }
+
+    public String deleteNote(Long userId, Long noteId) {
+        if (userId != noteRepository.findById(noteId).get().getUserId()) {
+            return "You don't have permission to delete this note";
+        } else {
+            noteRepository.deleteById(noteId);
+            return "Note deleted successfully";
+        }
+    }
 }

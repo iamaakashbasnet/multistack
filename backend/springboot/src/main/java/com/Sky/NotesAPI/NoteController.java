@@ -27,4 +27,18 @@ public class NoteController {
 
         return ResponseEntity.ok(noteService.createNote(userId, noteRequestDTO));
     }
+
+    @PutMapping("{noteId}")
+    public ResponseEntity<NoteResponseDTO> updateNote(@PathVariable Long noteId, @RequestBody NoteRequestDTO noteRequestDTO, HttpServletRequest request) {
+        Long userId = (Long) request.getAttribute("userId");
+        
+        return ResponseEntity.ok(noteService.updateNote(userId, noteId, noteRequestDTO));
+    }
+
+    @DeleteMapping("{noteId}")
+    public ResponseEntity<String> deleteNote(@PathVariable Long noteId, HttpServletRequest request) {
+        Long userId = (Long) request.getAttribute("userId");
+
+        return ResponseEntity.ok(noteService.deleteNote(userId, noteId));
+    }
 }
