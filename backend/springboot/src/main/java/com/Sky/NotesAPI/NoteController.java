@@ -4,7 +4,6 @@ import lombok.RequiredArgsConstructor;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import com.Sky.NotesAPI.utils.JwtUtils;
 
 import java.util.List;
 
@@ -14,22 +13,18 @@ import java.util.List;
 @RequiredArgsConstructor
 public class NoteController {
     private final NoteService noteService;
-    private final JwtUtils jwtUtil;
 
     @GetMapping
-    public ResponseEntity<List<NoteDTO>> getNotes(HttpServletRequest request) {
-        String authHeader = request.getHeader("Authorization");
-        Long userId = jwtUtil.extractUserId(authHeader);
+    public ResponseEntity<List<NoteResponseDTO>> getNotes(HttpServletRequest request) {
+        Long userId = (Long) request.getAttribute("userId");
 
         return ResponseEntity.ok(noteService.listNotes(userId));
     }
 
     @PostMapping
-    public ResponseEntity<NoteDTO> createNote(@RequestBody NoteDTO noteDTO, HttpServletRequest request) {
-        String authHeader = request.getHeader("Authorization");
-        Long userId = jwtUtil.extractUserId(authHeader);
+    public ResponseEntity<NoteResponseDTO> createNote(@RequestBody NoteRequestDTO noteRequestDTO, HttpServletRequest request) {
+        Long userId = (Long) request.getAttribute("userId");
 
-
-        return ResponseEntity.ok(noteService.createNote(userId, noteDTO));
+        return ResponseEntity.ok(noteService.createNote(userId, noteRequestDTO));
     }
 }

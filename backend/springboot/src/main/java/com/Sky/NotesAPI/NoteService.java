@@ -13,23 +13,23 @@ import java.util.List;
 public class NoteService {
     private final NoteRepository noteRepository;
 
-    public List<NoteDTO> listNotes(Long userId) {
+    public List<NoteResponseDTO> listNotes(Long userId) {
         List<Note> notes = noteRepository.findByUserId(userId);
-        List<NoteDTO> notesResponseDTOS = new ArrayList<>();
+        List<NoteResponseDTO> notesResponseDTOS = new ArrayList<>();
         notes.forEach(item -> {
-            NoteDTO noteResponseDTO = new NoteDTO(item);
+            NoteResponseDTO noteResponseDTO = new NoteResponseDTO(item);
             notesResponseDTOS.add(noteResponseDTO);
         });
 
         return notesResponseDTOS;
     }
 
-    public NoteDTO createNote(Long userId, NoteDTO noteDTO) {
+    public NoteResponseDTO createNote(Long userId, NoteRequestDTO noteRequestDTO) {
         Note note = new Note();
-        note.setTitle(noteDTO.getTitle());
-        note.setContent(noteDTO.getContent());
+        note.setTitle(noteRequestDTO.getTitle());
+        note.setContent(noteRequestDTO.getContent());
         note.setUserId(userId);
         Note savedNote = noteRepository.saveAndFlush(note);
-        return new NoteDTO(savedNote);
+        return new NoteResponseDTO(savedNote);
     }
 }

@@ -6,11 +6,11 @@ import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
-public class NoteDTO {
+public class NoteRequestDTO {
     private String title;
     private String content;
 
-    public NoteDTO(Note note) {
+    public NoteRequestDTO(Note note) {
         this.title = note.getTitle();
         this.content = note.getContent();
     }
