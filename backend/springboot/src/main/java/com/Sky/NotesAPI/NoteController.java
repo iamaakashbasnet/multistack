@@ -13,28 +13,23 @@ import java.util.List;
 @RequestMapping("/api/notes/")
 @RequiredArgsConstructor
 public class NoteController {
-    private final NoteRepository noteRepository;
+    private final NoteService noteService;
     private final JwtUtils jwtUtil;
 
-    @PostMapping
-    public ResponseEntity<Note> createNote(@RequestBody NoteDTO noteDTO,
-                                           HttpServletRequest request) {
+    @GetMapping
+    public ResponseEntity<List<NoteDTO>> getNotes(HttpServletRequest request) {
         String authHeader = request.getHeader("Authorization");
         Long userId = jwtUtil.extractUserId(authHeader);
 
-        Note note = new Note();
-        note.setTitle(noteDTO.getTitle());
-        note.setContent(noteDTO.getContent());
-        note.setUserId(userId);
-
-        return ResponseEntity.ok(noteRepository.save(note));
+        return ResponseEntity.ok(noteService.listNotes(userId));
     }
 
-    @GetMapping
-    public ResponseEntity<List<Note>> getNotes(HttpServletRequest request) {
+    @PostMapping
+    public ResponseEntity<NoteDTO> createNote(@RequestBody NoteDTO noteDTO, HttpServletRequest request) {
         String authHeader = request.getHeader("Authorization");
         Long userId = jwtUtil.extractUserId(authHeader);
 
-        return ResponseEntity.ok(noteRepository.findByUserId(userId));
+
+        return ResponseEntity.ok(noteService.createNote(userId, noteDTO));
     }
 }
