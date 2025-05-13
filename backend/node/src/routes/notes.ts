@@ -7,7 +7,10 @@ const prisma = new PrismaClient();
 // List all todos
 router.get('/', async (_req, res) => {
   try {
-    const notes = await prisma.todos.findMany();
+    const user_id = (_req as any).user.id;
+    const notes = await prisma.todos.findMany(
+      user_id ? { where: { user_id } } : undefined
+    );
     res.json(notes);
   } catch (err) {
     res.status(500).json({ error: (err as Error).message });

@@ -1,18 +1,25 @@
 import express from 'express';
 import notesRouter from './routes/notes';
 import { verifyToken } from './middlewares/jwtMiddleware';
+import { startUserDeletedConsumer } from './consumers/userDeletedConsumer';
 
 (BigInt.prototype as any).toJSON = function () {
   return this.toString();
 };
 
-const app = express();
-app.use(verifyToken);
+async function bootstrap() {
+  await startUserDeletedConsumer();
 
-app.use(express.json());
-app.use('/api/notes/', notesRouter);
+  const app = express();
+  app.use(verifyToken);
 
-const PORT = process.env.PORT || 8002;
-app.listen(PORT, () => {
-  console.log(`🚀 Server running on http://localhost:${PORT}`);
-});
+  app.use(express.json());
+  app.use('/api/notes/', notesRouter);
+
+  const PORT = process.env.PORT || 8002;
+  app.listen(PORT, () => {
+    console.log(`🚀 Server running on http://localhost:${PORT}`);
+  });
+}
+
+bootstrap();

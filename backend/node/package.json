@@ -14,11 +14,13 @@
   "description": "",
   "dependencies": {
     "@prisma/client": "^6.7.0",
+    "amqplib": "^0.10.8",
     "express": "^5.1.0",
     "jsonwebtoken": "^9.0.2",
     "pg": "^8.15.6"
   },
   "devDependencies": {
+    "@types/amqplib": "^0.10.7",
     "@types/express": "^5.0.1",
     "@types/jsonwebtoken": "^9.0.9",
     "prisma": "^6.7.0",
