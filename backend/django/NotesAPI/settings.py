@@ -78,7 +78,7 @@ WSGI_APPLICATION = 'NotesAPI.wsgi.application'
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
-        'NAME': 'multistack',
+        'NAME': 'multistack-auth',
         'USER': 'postgres',
         'PASSWORD': 'postgres',
         'HOST': 'localhost',
